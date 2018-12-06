@@ -39,35 +39,35 @@
                                     <action selector="onBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="z60-wc-608"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每秒都有幸福感" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Drh-jB-1cR">
-                                <rect key="frame" x="198.5" y="262" width="156.5" height="27"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开启每秒幸福感" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Drh-jB-1cR">
+                                <rect key="frame" x="20" y="262" width="335" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日收入：" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rZq-AX-pAU">
-                                <rect key="frame" x="82" y="262" width="111.5" height="27"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击开始" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rZq-AX-pAU">
+                                <rect key="frame" x="142.5" y="162" width="90" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="rZq-AX-pAU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-50" id="BYu-wM-3eh"/>
+                            <constraint firstItem="rZq-AX-pAU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BYu-wM-3eh"/>
                             <constraint firstItem="Drh-jB-1cR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="MD1-x9-uYk"/>
-                            <constraint firstItem="Drh-jB-1cR" firstAttribute="leading" secondItem="rZq-AX-pAU" secondAttribute="trailing" constant="5" id="YH5-0c-Dcp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Drh-jB-1cR" secondAttribute="trailing" constant="20" id="hCu-ok-Fk8"/>
+                            <constraint firstItem="Drh-jB-1cR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="VKz-6b-UcO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Drh-jB-1cR" secondAttribute="trailing" constant="20" id="fvv-Xy-URb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tRU-eP-3xj" secondAttribute="bottom" constant="100" id="sd9-5A-acZ"/>
                             <constraint firstItem="tRU-eP-3xj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wxJ-Ja-NdG"/>
-                            <constraint firstItem="rZq-AX-pAU" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="zO5-tO-9P8"/>
+                            <constraint firstItem="rZq-AX-pAU" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-100" id="zO5-tO-9P8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="钱钱" id="Ekb-vB-sNV"/>
                     <connections>
-                        <outlet property="label" destination="Drh-jB-1cR" id="Bpc-r9-yre"/>
+                        <outlet property="countLabel" destination="Drh-jB-1cR" id="Bpc-r9-yre"/>
                         <outlet property="startBtn" destination="tRU-eP-3xj" id="lY2-wc-FFg"/>
+                        <outlet property="tipLabel" destination="rZq-AX-pAU" id="MYR-6j-R6L"/>
                         <segue destination="znx-K6-op1" kind="show" identifier="edit" id="PAp-x7-1Hh"/>
                     </connections>
                 </viewController>

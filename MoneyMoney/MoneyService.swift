@@ -33,7 +33,7 @@ class MoneyService: NSObject {
     
     /// 持续收入
     @objc func income(){
-        
+        guard self.state == .working else{return}
         self.earnMoney += (self.secondSalary * incomUnitSecond)
     }
     
@@ -96,7 +96,30 @@ class MoneyService: NSObject {
             weak += 1
         }
         // 今天的工作状态
-        self.state = isworkToday ? TodayState.work : TodayState.rest
+        self.state = isworkToday ? TodayState.notStart : TodayState.rest
+        
+        // 开始工作的时间成分
+        var startComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute,.second], from: start)
+        startComponents.year = todayComponents.year
+        startComponents.month = todayComponents.month
+        startComponents.day = todayComponents.day
+        guard let todayStartWordDate = calendar.date(from: startComponents) else {
+            return
+        }
+        // 结束工作的时间成分
+        var endComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute,.second], from: end)
+        endComponents.year = todayComponents.year
+        endComponents.month = todayComponents.month
+        endComponents.day = todayComponents.day
+        guard let todayEndWordDate = calendar.date(from: endComponents) else {
+            return
+        }
+        
+        if todayStartWordDate > now {//还没到时间
+            self.state = .notStart
+            return
+        }
+        
         
         let dailySalary = salary / Double(workDayNumber)
         
@@ -108,14 +131,9 @@ class MoneyService: NSObject {
             return
         }
         
-        var startComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute,.second], from: start)
-        startComponents.year = todayComponents.year
-        startComponents.month = todayComponents.month
-        startComponents.day = todayComponents.day
         
-        guard let todayStartWordDate = calendar.date(from: startComponents) else {
-            return
-        }
+        
+        
         
         let oneDayWorkSecond = end.timeIntervalSince(start)
         let todayPassedSecond = now.timeIntervalSince(todayStartWordDate)
@@ -125,9 +143,17 @@ class MoneyService: NSObject {
         
         let todayEarned = todayPassedSecond * secondSalary
         
+        if now > todayEndWordDate {
+            self.state = .didEnd
+            self.earnMoney =  todayEarned
+            return
+        }
+        
+        // 正在工作中
+        self.state = .working
         self.earnMoney =  todayEarned
         
-        self.state = .work
+        
         self.timer.fire()
         return
     }
@@ -143,6 +169,8 @@ extension MoneyService {
     enum TodayState {
         case noInitialization
         case rest
-        case work
+        case notStart
+        case working
+        case didEnd
     }
 }

@@ -43,8 +43,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             self.countLabel.text  = "需要打开APP先进行设置"
         case .rest:
             self.countLabel.text = "好好休息"
-        case .work:
+        case .working:
             self.countLabel.text = String.init(format: "今日收入：¥ %.2f", MoneyService.shared.earnMoney)
+        case .notStart:
+            self.countLabel.text = "吃饱喝足，准备赚钱"
+        case .didEnd:
+            self.countLabel.text = String.init(format: "今日总共赚了：¥ %.2f，买点东西犒劳自己吧", MoneyService.shared.earnMoney)
         }
     }
         

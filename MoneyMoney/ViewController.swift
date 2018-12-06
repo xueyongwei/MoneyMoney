@@ -18,7 +18,10 @@ class ViewController: UIViewController {
     
     fileprivate var todayEarn = 10.0
     fileprivate var each = 0.01
-    @IBOutlet weak var label: UILabel!
+    
+    @IBOutlet weak var tipLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
+    
     lazy var timer: Timer = {
         weak var wkself = self
         let timer = Timer.init(timeInterval: 0.2, target: wkself, selector: #selector(updateEarnLabel), userInfo: nil, repeats: true)
@@ -37,14 +40,25 @@ class ViewController: UIViewController {
         
         switch MoneyService.shared.state {
         case .noInitialization:
-            self.label.text  = "点击开始，开启每秒幸福感"
-            startBtn.isSelected = false
+            self.tipLabel.text = ""
+            self.countLabel.text  = "点击开始，开启每秒幸福感"
+            self.countLabel.textAlignment = .center
         case .rest:
-            startBtn.isSelected = true
-            self.label.text = String.init(format: "¥ %.4f", MoneyService.shared.earnMoney)
-        case .work:
-            startBtn.isSelected = true
-            self.label.text = String.init(format: "¥ %.4f", MoneyService.shared.earnMoney)
+            self.tipLabel.text = String.init(format: "本月累计赚了：¥ %.2f", MoneyService.shared.earnMoney)
+            self.countLabel.textAlignment = .center
+            self.countLabel.text = "今天不上班，好好休息"
+        case .working:
+            self.tipLabel.text = "今日收入："
+            self.countLabel.text = String.init(format: "¥ %.2f", MoneyService.shared.earnMoney)
+            self.countLabel.textAlignment = .left
+        case .notStart:
+            self.tipLabel.text = "未到工作时间"
+            self.countLabel.text = "吃饱喝足，准备赚钱"
+            self.countLabel.textAlignment = .center
+        case .didEnd:
+            self.tipLabel.text = String.init(format: "今日总共赚了：¥ %.2f", MoneyService.shared.earnMoney)
+            self.countLabel.text = "买点东西犒劳自己吧！"
+            self.countLabel.textAlignment = .center
         }
     }
     
