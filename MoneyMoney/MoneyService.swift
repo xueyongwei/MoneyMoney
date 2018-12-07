@@ -28,12 +28,15 @@ class MoneyService: NSObject {
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(start), name: UIApplication.didBecomeActiveNotification, object: nil)
-        
+        self.timer.fire()
     }
     
     /// 持续收入
     @objc func income(){
-        guard self.state == .working else{return}
+        
+        guard self.state == .working else{
+            return
+        }
         self.earnMoney += (self.secondSalary * incomUnitSecond)
     }
     
@@ -45,27 +48,37 @@ class MoneyService: NSObject {
         }
         
         var calendar = Calendar.current
-        calendar.firstWeekday = 1;
+        calendar.timeZone = TimeZone.current
+//        calendar.firstWeekday = 1;
         
         let now = Date()
+        
         // 今天的成分
-        let todayComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute,.second], from: now)
+        var todayComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute,.second], from: now)
+        todayComponents.timeZone = TimeZone.current
+        
         
         // 计算出本月有几天
         guard let daysInMonth = calendar.range(of: .day, in: .month, for: now) else{
             return
         }
         // 本月第一天日期成分
+        
         var firstDayComponents = calendar.dateComponents([.year,.month,.day], from: now)
+        firstDayComponents.timeZone = TimeZone.current
         firstDayComponents.day = 1
         
+        
         // 本月第一天是周几
-        guard let firstDayOfMonth = calendar.date(from: firstDayComponents),let firstWeekDay = calendar.ordinality(of: .weekday, in: .weekOfMonth, for: firstDayOfMonth) else{
+        
+        guard let firstDayOfMonth = calendar.date(from: firstDayComponents),var firstWeekDay = calendar.ordinality(of: .weekday, in: .weekOfMonth, for: firstDayOfMonth) else{
+            
             return
         }
         
         
         //        美国时间周日-周六为 1-7
+        firstWeekDay -= 1
         //        guard let userWorkDays = UserDefaults.standard.array(forKey: "userWorkDays") as? [Int] else {return nil}
 //        let userWorkDays = [2,3,4,5,6]
         
@@ -82,7 +95,7 @@ class MoneyService: NSObject {
         for day in daysInMonth{
             //美国时间周日-周六为 1-7，为了计算方便，我们从0-6表示周日到周六
             weak = weak % 7
-            
+            print("today \(day) is week \(weak)")
             if todayComponents.day == day {
                 didWorkedDaysThisMonth = workDayNumber
             }
@@ -132,9 +145,6 @@ class MoneyService: NSObject {
         }
         
         
-        
-        
-        
         let oneDayWorkSecond = end.timeIntervalSince(start)
         let todayPassedSecond = now.timeIntervalSince(todayStartWordDate)
         
@@ -154,7 +164,7 @@ class MoneyService: NSObject {
         self.earnMoney =  todayEarned
         
         
-        self.timer.fire()
+        
         return
     }
     
